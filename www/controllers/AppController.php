@@ -15,7 +15,7 @@ use models\User;
 
 abstract class AppController extends Controller
 {
-    public $curUser;
+    public static $curUser;
 
     public function __construct($route)
     {
@@ -29,6 +29,8 @@ abstract class AppController extends Controller
             $this->redirect("/user/login");
             die();
         }
+
+        self::$curUser = User::findUserByLogin($_SESSION['USER']);
     }
 
 }

@@ -45,29 +45,14 @@ class Ticket extends Model
         return $resp;
     }
 
-    public function editTicketByNumber($number){
-        $baseUrl = JSON_TICKETS_URL ;
-        $ch = curl_init();
-        curl_setopt_array($ch, array(
-            CURLOPT_USERPWD => ONEС_USER.":".ONEС_PWD,
-            CURLOPT_CUSTOMREQUEST => 'MERGE',
-            CURLOPT_HTTPHEADER =>array('Content-Type:application/atom+xml;type=entry','Accept:application/atom+xml'),
-            CURLOPT_POSTFIELDS => '' ,
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $baseUrl
-        ));
-        $result = curl_exec($ch);
-        curl_close($ch);
-    }
 
-    public function deleteTicketByNumber($number){
-        $baseUrl  = JSON_TICKETS_URL ;
-        $baseUrl .= '&filter=Number%20eq%20'.$number;
+    public static function deleteTicketByGuid($guid){
+        $baseUrl = TICKETS_URL."(guid'{$guid}')";
         $ch = curl_init();
         curl_setopt_array($ch, array(
             CURLOPT_USERPWD => ONEС_USER.":".ONEС_PWD,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
-            CURLOPT_HTTPHEADER =>array('Content-Type: application/json;charset=utf-8','Accept: application/json'),
+            CURLOPT_HTTPHEADER =>array('Content-Type:application/atom+xml;type=entry','Accept:application/atom+xml'),
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => $baseUrl
         ));

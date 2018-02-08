@@ -19,9 +19,9 @@ class TicketController extends Controller
     public $filter;
 
     public function indexAction(){
-        $guid = User::findGuidByLogin($_SESSION['USER']);
+        $user = User::findUserByLogin($_SESSION['USER']); // user current user !
         $ticket = new Ticket;
-        $ticketsArr = $ticket->getTicketsByGuid($guid);
+        $ticketsArr = $ticket->getTicketsByGuid($user->guid);
         $this->setVars(compact('ticketsArr'));
     }
 
@@ -33,12 +33,19 @@ class TicketController extends Controller
         if(isset($_GET['filter'])){
             $this->filter = $_GET['filter'];
         }
-        $guid = User::findGuidByLogin($_SESSION['USER']);
+        $user = User::findUserByLogin($_SESSION['USER']);
         $ticket = new Ticket;
-        $ticketsArr = $ticket->getTicketsByGuid($guid,['top'=>$this->top,'filter'=>$this->filter]); // filter = finished
+        $ticketsArr = $ticket->getTicketsByGuid($user->guid,['top'=>$this->top,'filter'=>$this->filter]); // filter = finished
         $this->setVars(compact('ticketsArr'));
         $this->layout = false;
         $this->view = 'list';
+    }
+
+    public function deleteAction(){
+        if(isset($_GET['guid'])){
+            Ticket::deleteTicketByGuid($_GET['guid']);
+        }
+        $this->redirect('/ticket');
     }
 
 }
