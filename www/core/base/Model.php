@@ -57,7 +57,6 @@ abstract class Model
 
     public static function findAll($options = [], $limit = false){
         self::setDB();
-        //debug( static::$tableName,true);
         $sql = "SELECT * FROM " . static::$tableName;
 
         if (count($options) > 0) {

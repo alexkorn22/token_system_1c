@@ -15,8 +15,8 @@
 
 <!---->
 <!---->
-
 <body class="container-fullwidth">
+<? if(!$ajaxView):?>
 <nav class="navbar  navbar-toggleable navbar-light" style="background-color: lightskyblue;">
     <a class="navbar-brand" href="/">WeDo Support</a>
     <div>
@@ -44,6 +44,7 @@
 </nav>
 <br/>
 <br/>
+<? endif;?>
 <div class="container">
 
     <?php
