@@ -6,19 +6,23 @@
 <h3><?=$title?></h3>
 <br/>
 
-<a class="btn-primary btn" href="/admin/test/add">Add New Test</a><br/><br/>
+<a class="btn-primary btn" href="/admin/main">Add New User</a><br/><br/>
 
 <table class="table">
     <tr>
-        <th> Test </th>
+        <th> User Id </th>
+        <th> guid </th>
+        <th> login </th>
         <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th>&nbsp; </th>
 
     </tr>
 
-<?php foreach($tests as $test){ ?>
+<?php foreach($users as $user){ ?>
         <tr>
-            <td ><?=$test->title?></td>
+            <td ><?=$user->id?></td>
+            <td ><?=$user->guid?></td>
+            <td ><?=$user->login?></td>
             <td>
                 <a href="/admin/test/edit?test_id=<?=$test->id?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
             </td>

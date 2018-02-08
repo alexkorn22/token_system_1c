@@ -19,20 +19,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/admin">Tests</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/admin/question">Questions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/answer">Answers</a>
+                <a class="nav-link" href="/admin/user">Users</a>
             </li>
         </ul>
 
         <ul class="navbar-nav navbar-right">
-            <?php if(!empty($_SESSION['USER'])){ ?>
+            <?php if(!empty($_SESSION['ADMIN'])){ ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"> User : <?=$_SESSION['USER']?></a>
+                    <a class="nav-link" href="#"> Admin : <?=$_SESSION['ADMIN']?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="\admin\main\logout">Log Out</a>
@@ -47,7 +41,6 @@
     <div  class="container">
         <?=$content?>
     </div>
-<!-- // add logout in head menu -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>

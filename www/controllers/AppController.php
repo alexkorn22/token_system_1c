@@ -10,8 +10,25 @@ namespace controllers;
 
 
 use core\base\Controller;
+use models\User;
+
 
 abstract class AppController extends Controller
 {
+//    public $curUser;
+    public function __construct($route)
+    {
+        parent::__construct($route);
+        $this->layout = LAYOUT_DEFAULT;
+        $user = new User;
+        if($user->getCurUser() == false){ // if not logged in redirect him
+            if($route['controller']=='User' && $route['action']=='login'){
+                return; // if this is the Main login so no need to redirect him !
+            }
+            $this->redirect("/user/login");
+            die();
+        }
+
+    }
 
 }

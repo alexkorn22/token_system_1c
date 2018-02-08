@@ -28,6 +28,17 @@
 
             </li>
         </ul>
+        <ul class="navbar-nav navbar-right">
+            <?php if(!empty($_SESSION['USER'])){ ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> User : <?=$_SESSION['USER']?></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="\user\logout">Log Out</a>
+                </li>
+
+            <?php }?>
+        </ul>
     </div>
 
 </nav>

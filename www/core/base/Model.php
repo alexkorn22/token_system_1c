@@ -49,7 +49,6 @@ abstract class Model
             if (isset($data[$key])) {
                 $this->attributes[$key] = $data[$key];
             }
-
         }
 
         // debug($this->attributes);
@@ -58,7 +57,7 @@ abstract class Model
 
     public static function findAll($options = [], $limit = false){
         self::setDB();
-        //debug($options,true);
+        //debug( static::$tableName,true);
         $sql = "SELECT * FROM " . static::$tableName;
 
         if (count($options) > 0) {
@@ -186,6 +185,26 @@ abstract class Model
         $sql .= " WHERE id= ? ";
         $stmt = self::$db->pdo->prepare($sql);
         $stmt->execute([$id]);
+    }
+
+
+    public static function findGuidByLogin($login){
+        self::setDB();
+        $sql = "SELECT * FROM " . static::$tableName;
+        $sql .= " WHERE login= '" . $login . "' LIMIT 1";
+        $result = self::$db->pdo->query($sql);
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+                $object = new static();
+                if (isset($row['id'])) {
+                    $object->id = (int)$row['id'];
+                }
+                $object->load($row);
+                $record_object = $object;
+            }
+        }
+
+        return $record_object->guid;
     }
 
 
