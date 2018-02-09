@@ -38,4 +38,13 @@ class User extends Model
         return $record_object;
     }
 
+
+    public function getCurUser(){
+        if(isset($_SESSION['USER_ID'])){
+            $curUser = User::findOneById($_SESSION['USER_ID']);
+            return $curUser;
+        }
+        return false;
+    }
+
 }

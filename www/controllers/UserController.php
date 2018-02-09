@@ -8,39 +8,30 @@
 
 namespace controllers;
 
+use Couchbase\UserSettings;
 use models\User;
 
 class UserController extends AppController
 {
     public function loginAction(){
-        $this->view = 'login';
         $title = "Log in page..";
-        $isAuth = $this->checkLoginData();
-        if($isAuth){
-            $this->redirect('/main');
+        if(isset($_POST['login'])){
+            $user = User::findUserByLogin($_POST['login']);
+        }
+        if($user){
+            if(password_verify($_POST['password'], $user->password)){
+                $_SESSION['USER_ID'] = $user->id;
+                $this->curUser = $user ;
+                $this->redirect('/main');
+            }
         }
         $this->setVars(compact('title'));
     }
 
     public function logoutAction()
     {
-        unset($_SESSION['USER']);
+        unset( $_SESSION['USER_ID']);
         $this->redirect('\main');
-    }
-
-    public function checkLoginData(){
-        if (!empty($_SESSION['USER'])) {
-            return true ;
-        }else{
-            $users = User::findAll();
-            foreach ($users as $user){
-                if ($_POST['userName'] == $user->login && password_verify($_POST['password'], $user->password)){
-                    $_SESSION['USER'] = $_POST['userName'];
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 
 }

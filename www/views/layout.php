@@ -29,9 +29,9 @@
             </li>
         </ul>
         <ul class="navbar-nav navbar-right">
-            <?php if(!empty($_SESSION['USER'])){ ?>
+            <?php if(!empty( $_SESSION['USER_ID'])){ ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"> User : <?=$_SESSION['USER']?></a>
+                    <a class="nav-link" href="#"> User :</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="\user\logout">Log Out</a>

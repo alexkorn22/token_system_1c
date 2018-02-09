@@ -15,22 +15,23 @@ use models\User;
 
 abstract class AppController extends Controller
 {
-    public static $curUser;
+    public $curUser;
 
     public function __construct($route)
     {
         parent::__construct($route);
         $this->layout = LAYOUT_DEFAULT;
-
-        if(empty($_SESSION['USER'])){ // if not logged in redirect him
+        $user = new User;
+        if(!$user->getCurUser()){ // if not logged in redirect him
             if($route['controller']=='User' && $route['action']=='login'){
                 return; // if this is the Main login so no need to redirect him !
             }
             $this->redirect("/user/login");
             die();
         }
-
-        self::$curUser = User::findUserByLogin($_SESSION['USER']);
+        $this->curUser = $user->getCurUser();
     }
+
+
 
 }

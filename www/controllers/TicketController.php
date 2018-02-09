@@ -13,15 +13,14 @@ use core\base\Controller;
 use models\Ticket;
 use models\User;
 
-class TicketController extends Controller
+class TicketController extends AppController
 {
     public $top;
     public $filter;
 
     public function indexAction(){
-        $user = User::findUserByLogin($_SESSION['USER']); // user current user !
         $ticket = new Ticket;
-        $ticketsArr = $ticket->getTicketsByGuid($user->guid);
+        $ticketsArr = $ticket->getTicketsByGuid($this->curUser->guid);
         $this->setVars(compact('ticketsArr'));
     }
 
@@ -33,7 +32,7 @@ class TicketController extends Controller
         if(isset($_GET['filter'])){
             $this->filter = $_GET['filter'];
         }
-        $user = User::findUserByLogin($_SESSION['USER']);
+        $user = $this->curUser;
         $ticket = new Ticket;
         $ticketsArr = $ticket->getTicketsByGuid($user->guid,['top'=>$this->top,'filter'=>$this->filter]); // filter = finished
         $this->setVars(compact('ticketsArr'));
