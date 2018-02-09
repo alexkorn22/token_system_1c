@@ -27,7 +27,8 @@ abstract class Controller
 
     public function setVars($vars)
     {
-        $this->vars = $vars;
+        $vars['user']= User::getCurUser();
+        $this->vars  = $vars;
     }
 
 

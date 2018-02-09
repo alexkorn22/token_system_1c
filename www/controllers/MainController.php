@@ -7,7 +7,6 @@
  */
 
 namespace controllers;
-use models\User;
 
 class MainController extends AppController
 {

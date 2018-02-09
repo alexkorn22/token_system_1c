@@ -17,8 +17,7 @@ abstract class AppController extends Controller
 {
     public $curUser;
 
-    public function __construct($route)
-    {
+    public function __construct($route){
         parent::__construct($route,$this->curUser->login);
         $this->layout = LAYOUT_DEFAULT;
         $user = User::getCurUser();
