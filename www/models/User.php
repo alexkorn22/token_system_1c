@@ -11,6 +11,7 @@ use core\base\Model;
 class User extends Model
 {
     public static $tableName  = 'users';
+    public static $user;
 
     protected $attributes = array(
         'login'=>'',
@@ -19,27 +20,26 @@ class User extends Model
     );
 
 
-    public static function findUserByLogin($login){
+    public static function findByLogin($login){
         self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
         $sql .= " WHERE login= '" . $login . "' LIMIT 1";
         $result = self::$db->pdo->query($sql);
+        $object = new static();
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
-                $object = new static();
                 if (isset($row['id'])) {
                     $object->id = (int)$row['id'];
                 }
                 $object->load($row);
-                $record_object = $object;
             }
         }
 
-        return $record_object;
+        return $object;
     }
 
 
-    public function getCurUser(){
+    public static function getCurUser(){
         if(isset($_SESSION['USER_ID'])){
             $curUser = User::findOneById($_SESSION['USER_ID']);
             return $curUser;

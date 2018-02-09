@@ -13,8 +13,6 @@
         <th> User Id </th>
         <th> guid </th>
         <th> login </th>
-        <th>&nbsp;</th>
-        <th>&nbsp; </th>
 
     </tr>
 
@@ -23,12 +21,6 @@
             <td ><?=$user->id?></td>
             <td ><?=$user->guid?></td>
             <td ><?=$user->login?></td>
-            <td>
-                <a href="/admin/test/edit?test_id=<?=$test->id?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
-            </td>
-            <td>
-                <a onclick="return confirm('Are you sure you want to delete?');" href="/admin/test/delete?test_id=<?=$test->id?>"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
-            </td>
         </tr>
 <?php } ?>
 </table>

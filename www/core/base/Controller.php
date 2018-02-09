@@ -8,27 +8,26 @@
 
 namespace core\base;
 use core\base\View;
+use models\User;
 
 abstract class Controller
 {
     public $layout;
     public $objView;
     public $view; // set by class
-    public $quest; // already set by class
     public $vars = [];
     public $route = [];
 
     public function __construct($route)
     {
         $this->layout = LAYOUT_DEFAULT;
-        $this->route = $route;
-        $this->view = $this->route['action'];
+        $this->route  = $route;
+        $this->view   = $this->route['action'];
     }
 
     public function setVars($vars)
     {
         $this->vars = $vars;
-
     }
 
 

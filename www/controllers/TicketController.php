@@ -19,8 +19,7 @@ class TicketController extends AppController
     public $filter;
 
     public function indexAction(){
-        $ticket = new Ticket;
-        $ticketsArr = $ticket->getTicketsByGuid($this->curUser->guid);
+        $ticketsArr = Ticket::getTicketsByGuid($this->curUser->guid);
         $this->setVars(compact('ticketsArr'));
     }
 
@@ -32,9 +31,8 @@ class TicketController extends AppController
         if(isset($_GET['filter'])){
             $this->filter = $_GET['filter'];
         }
-        $user = $this->curUser;
-        $ticket = new Ticket;
-        $ticketsArr = $ticket->getTicketsByGuid($user->guid,['top'=>$this->top,'filter'=>$this->filter]); // filter = finished
+
+        $ticketsArr = Ticket::getTicketsByGuid($this->curUser->guid,['top'=>$this->top,'filter'=>$this->filter]); // filter = finished
         $this->setVars(compact('ticketsArr'));
         $this->layout = false;
         $this->view = 'list';

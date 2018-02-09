@@ -79,6 +79,7 @@ abstract class Model
         $result = $stmt->execute(array_values($options));
 
         $records = array();
+
         if ($result) {
             while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
                 $object = new static();

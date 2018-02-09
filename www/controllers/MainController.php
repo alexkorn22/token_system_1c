@@ -13,6 +13,7 @@ class MainController extends AppController
 {
 
     public function indexAction(){
-
+        $title = 'WeDo Support';
+        $this->setVars(compact('title'));
     }
 }

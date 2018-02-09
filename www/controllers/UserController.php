@@ -16,15 +16,16 @@ class UserController extends AppController
     public function loginAction(){
         $title = "Log in page..";
         if(isset($_POST['login'])){
-            $user = User::findUserByLogin($_POST['login']);
-        }
-        if($user){
-            if(password_verify($_POST['password'], $user->password)){
-                $_SESSION['USER_ID'] = $user->id;
-                $this->curUser = $user ;
-                $this->redirect('/main');
+            $user = User::findByLogin($_POST['login']);
+            if($user){
+                if(password_verify($_POST['password'], $user->password)){
+                    $_SESSION['USER_ID'] = $user->id;
+                    $this->curUser = $user ;
+                    $this->redirect('/main');
+                }
             }
         }
+
         $this->setVars(compact('title'));
     }
 

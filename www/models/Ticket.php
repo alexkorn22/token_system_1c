@@ -11,39 +11,54 @@ use core\base\Model;
 
 class Ticket extends Model
 {
-    public $select = '' ;
-    public $top = '' ;
-    public $filter = [];
+    protected $attributes = array(
+        'Number'=>'',
+        'Date'=>'',
+        'Завершено'=>'',
+        'Результат'=>'',
+        'Ref_Key'=>''
+    );
 
 
-    public function getTicketsByGuid($guid,$options=[]){
-        // get xml data by guid
-        $this->filter['finished'] = 'true';
-        if(!empty($options)){
-          $this->select = $options['select'];
-          $this->top    = isset($options['top'])? $options['top'] : $this->top ;
+
+    public static function getTicketsByGuid($guid,$options=[]){
+        // create url :
+        $select   =  isset($options['select'])? $options['select'] :  '' ;
+        $top      = isset($options['top'])? $options['top'] : '' ;
+        $baseUrl  = JSON_TICKETS_URL ;
+        $baseUrl .= '&$select='.$select ;
+        $baseUrl .= '&$top='.$top ;
+        $baseUrl .= '&$filter=Клиент_Key%20eq%20guid'."'".$guid."'";
+
+        if(isset($options['filter']) && $options['filter']=='finished'){
+            $filter= 'false';
+            $baseUrl .= '%20and%20Завершено%20eq%20'.$filter;
         }
+
+        // send request :
         $curl = curl_init();
-        $baseUrl = JSON_TICKETS_URL ;
-        $baseUrl .= '&$select=&$top='.$this->top.'&$filter=Клиент_Key%20eq%20guid'."'".$guid."'";
-        if($options['filter']=='finished'){
-            $this->filter['finished']= 'false';
-            $baseUrl .= '%20and%20Завершено%20eq%20'.$this->filter['finished'];
-        }
-
         curl_setopt_array($curl, array(
                 CURLOPT_USERPWD => ONEС_USER.":".ONEС_PWD,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => $baseUrl
             )
         );
-
-        // save results to $resp :
         $resp = curl_exec($curl);
         curl_close($curl);
         $resp = json_decode($resp,true);
-        return $resp;
+
+        // results to an array of objects :
+        $records = array();
+        if ($resp) {
+            foreach ($resp['value'] as $ticket) {
+                $object = new static();
+                $object->load($ticket);
+                $records[] = $object;
+            }
+        }
+        return $records;
     }
+
 
 
     public static function deleteTicketByGuid($guid){
@@ -58,6 +73,7 @@ class Ticket extends Model
         ));
         $result = curl_exec($ch);
         curl_close($ch);
+        return $result;
     }
 
 }

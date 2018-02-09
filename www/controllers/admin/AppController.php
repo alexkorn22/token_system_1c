@@ -17,9 +17,10 @@ abstract class AppController extends Controller
     public function __construct($route)
     {
         $adminData = require_once ROOT . "/config/config.php";
+
         parent::__construct($route);
         $this->layout = LAYOUT_ADMIN_DEFAULT;
-        if(!$this->checkLogin($adminData['admins'])){ // if not logged in redirect him
+        if(!$this->checkLogin($adminData)){ // if not logged in redirect him
             if($route['controller']=='Main' && $route['action']=='login'){
                 return; // if this is the Main login so no need to redirect him !
             }

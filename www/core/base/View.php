@@ -11,6 +11,7 @@ class View
     private $route =[];
     public  $layout;
     public  $view ;
+    public $login;
 
     public function __construct($route,$view,$layout){
         $this->route = $route ;
