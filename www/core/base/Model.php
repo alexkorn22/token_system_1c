@@ -102,9 +102,7 @@ abstract class Model
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
                 $object = new static();
-                if (isset($row['id'])) {
-                    $object->id = (int)$row['id'];
-                }
+                $object->id = (int)$row['id'];
                 $object->load($row);
                 return $object;
             }
@@ -122,9 +120,7 @@ abstract class Model
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
                 $object = new static();
-                if (isset($row['id'])) {
-                    $object->id = (int)$row['id'];
-                }
+                $object->id = (int)$row['id'];
                 $object->load($row);
                 return $object;
             }

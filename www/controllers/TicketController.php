@@ -15,8 +15,7 @@ use models\User;
 
 class TicketController extends AppController
 {
-    public $top;
-    public $filter;
+
 
     public function indexAction(){
         $ticketsArr = Ticket::getTicketsByGuid($this->curUser->guid);
@@ -24,17 +23,11 @@ class TicketController extends AppController
     }
 
     public function ListAction(){
-        if(isset($_GET['top'])){
-            $this->top   = isset($_GET['top']) ? $_GET['top'] : '';
-        }
-        if(isset($_GET['filter'])){
-            $this->filter = $_GET['filter'];
-        }
-
-        $ticketsArr = Ticket::getTicketsByGuid($this->curUser->guid,['top'=>$this->top,'filter'=>$this->filter]); // filter = finished
+        $top    = isset($_GET['top']) ? $_GET['top'] : '';
+        $filter = isset($_GET['filter'])? $_GET['filter'] : '';
+        $ticketsArr = Ticket::getTicketsByGuid($this->curUser->guid,['top'=>$top,'filter'=>$filter]); // filter = finished
         $this->setVars(compact('ticketsArr'));
         $this->layout = false;
-        $this->view = 'list';
     }
 
     public function deleteAction(){
