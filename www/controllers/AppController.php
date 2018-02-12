@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: amarz
- * Date: 16.11.2017
- * Time: 12:56
- */
 
 namespace controllers;
 
@@ -18,7 +12,7 @@ abstract class AppController extends Controller
     public $curUser;
 
     public function __construct($route){
-        parent::__construct($route,$this->curUser->login);
+        parent::__construct($route);
         $this->layout = LAYOUT_DEFAULT;
         $user = User::getCurUser();
         if(!$user){ // if not logged in redirect him
@@ -29,8 +23,8 @@ abstract class AppController extends Controller
             die();
         }
         $this->curUser = $user;
+        $login = $this->curUser->login ;
+        $this->setVars(compact('login'));
     }
-
-
 
 }

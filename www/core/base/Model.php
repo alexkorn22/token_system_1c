@@ -106,10 +106,29 @@ abstract class Model
                     $object->id = (int)$row['id'];
                 }
                 $object->load($row);
-                $record_object = $object;
+                return $object;
             }
         }
-        return $record_object;
+    }
+
+    public static function findOne($keyValue){
+        self::setDB();
+        $key   = array_shift(array_keys($keyValue));
+        $value = array_shift(array_values($keyValue));
+
+        $sql = "SELECT * FROM " . static::$tableName;
+        $sql .= " WHERE ".$key."= '" . $value . "' LIMIT 1";
+        $result = self::$db->pdo->query($sql);
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+                $object = new static();
+                if (isset($row['id'])) {
+                    $object->id = (int)$row['id'];
+                }
+                $object->load($row);
+                return $object;
+            }
+        }
     }
 
 

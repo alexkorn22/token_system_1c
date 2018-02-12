@@ -27,7 +27,7 @@
     <ul class="navbar-nav navbar-right">
         <?php if(!empty( $_SESSION['USER_ID'])){ ?>
             <li class="nav-item">
-                <a class="nav-link" href="#"> User : <?=$user->login?></a>
+                <a class="nav-link" href="#"> User : <?=$login?></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="\user\logout">Log Out</a>

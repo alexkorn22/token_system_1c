@@ -27,13 +27,14 @@ define('IMAGE_DATA_PATH',"/images/data");
 define('DIR_IMAGES_DATA',ROOT."/public".IMAGE_DATA_PATH);
 define('JSON_TICKETS_URL','http://artorg.ddns.net:8899/ArtorgWork20/odata/standard.odata/Document_ОбращенияКлиентов?$format=json');
 define('TICKETS_URL','http://artorg.ddns.net:8899/ArtorgWork20/odata/standard.odata/Document_ОбращенияКлиентов');
-define('JSON_CLIENTS_URL','http://artorg.ddns.net:8899/ArtorgWork20/odata/standard.odata/Catalog_Клиенты?$format=json');
 define('ONEС_USER','МарзукА');
 define('ONEС_PWD','это1с');
 
 
 $url = $_SERVER['REQUEST_URI'];
 Router::dispatch($url);
+
+// todo : Дублирование и путь лучше хранить в параметрах
 
 
 

@@ -25,10 +25,14 @@ abstract class Controller
         $this->view   = $this->route['action'];
     }
 
-    public function setVars($vars)
-    {
-        $vars['user']= User::getCurUser();
-        $this->vars  = $vars;
+    public function setVars($vars){
+        //TODO не перезаписывать (DONE)
+        if (!is_array($vars)) {
+            return;
+        }
+        foreach ($vars as $key => $value) {
+            $this->vars[$key] = $value;
+        }
     }
 
 

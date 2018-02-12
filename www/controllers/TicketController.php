@@ -24,7 +24,6 @@ class TicketController extends AppController
     }
 
     public function ListAction(){
-
         if(isset($_GET['top'])){
             $this->top   = isset($_GET['top']) ? $_GET['top'] : '';
         }

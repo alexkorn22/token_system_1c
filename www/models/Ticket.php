@@ -76,4 +76,9 @@ class Ticket extends Model
         return $result;
     }
 
+
+    public function updateTicket(){
+
+    }
+
 }
