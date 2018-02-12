@@ -1,20 +1,10 @@
 <?php
 
-namespace config;
-/*
+$oneCLoginData = array(
+    'user'=>'test',
+    'pass'=>'test'
+);
 
-class Config {
+return $oneCLoginData;
 
-    public static function getUserData(){
-        // 1C data
-        $userData = array(
-            'user'=>'test',
-            'pass'=>'test'
-        );
-
-        return $userData;
-    }
-}
-
-*/
 
