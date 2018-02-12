@@ -8,6 +8,7 @@
 
 namespace models;
 use core\base\Model;
+use config\Config;
 
 class Ticket extends Model
 {
@@ -25,7 +26,7 @@ class Ticket extends Model
         // create url :
         $select   =  isset($options['select'])? $options['select'] :  '' ;
         $top      = isset($options['top'])? $options['top'] : '' ;
-        $baseUrl  = JSON_TICKETS_URL ;
+        $baseUrl  =  TICKETS_URL.'?$format=json' ;
         $baseUrl .= '&$select='.$select ;
         $baseUrl .= '&$top='.$top ;
         $baseUrl .= '&$filter=Клиент_Key%20eq%20guid'."'".$guid."'";
@@ -35,10 +36,13 @@ class Ticket extends Model
             $baseUrl .= '%20and%20Завершено%20eq%20'.$filter;
         }
 
+
+        // 1C login data :
+        $OneCLogin = Config::getOneCLoginData();
         // send request :
         $curl = curl_init();
         curl_setopt_array($curl, array(
-                CURLOPT_USERPWD => ONEС_USER.":".ONEС_PWD,
+                CURLOPT_USERPWD => $OneCLogin['user'].":".$OneCLogin['pass'],
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => $baseUrl
             )
@@ -64,8 +68,11 @@ class Ticket extends Model
     public static function deleteTicketByGuid($guid){
         $baseUrl = TICKETS_URL."(guid'{$guid}')";
         $ch = curl_init();
+        // 1C login data :
+        $OneCLogin = Config::getOneCLoginData();
+        // delete request :
         curl_setopt_array($ch, array(
-            CURLOPT_USERPWD => ONEС_USER.":".ONEС_PWD,
+            CURLOPT_USERPWD => $OneCLogin['user'].":".$OneCLogin['pass'],
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_HTTPHEADER =>array('Content-Type:application/atom+xml;type=entry','Accept:application/atom+xml'),
             CURLOPT_RETURNTRANSFER => 1,

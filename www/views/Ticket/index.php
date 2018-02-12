@@ -19,5 +19,5 @@
 
 
 <div id="tickets">
-    <?php $this->getView('list',compact('ticketsArr')); ?>
+    <?php $this->renderView('list',compact('ticketsArr')); ?>
 </div>
