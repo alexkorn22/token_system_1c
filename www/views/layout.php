@@ -26,9 +26,9 @@
             </li>
         </ul>
     <ul class="navbar-nav navbar-right">
-        <?php if(App::$curUser->login){ ?>
+        <?php if(App::$user->login){ ?>
             <li class="nav-item">
-                <a class="nav-link" href="#"> User : <?=App::$curUser->login?></a>
+                <a class="nav-link" href="#"> User : <?=App::$user->login?></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="\user\logout">Log Out</a>

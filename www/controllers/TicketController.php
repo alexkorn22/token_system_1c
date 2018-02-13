@@ -17,14 +17,14 @@ class TicketController extends AppController
 
 
     public function indexAction(){
-        $ticketsArr = Ticket::getTicketsByGuid(App::$curUser->guid);
+        $ticketsArr = Ticket::getTicketsByGuid(App::$user->guid);
         $this->setVars(compact('ticketsArr'));
     }
 
     public function ListAction(){
         $top    = isset($_GET['top']) ? $_GET['top'] : '';
         $filter = isset($_GET['filter'])? $_GET['filter'] : '';
-        $ticketsArr = Ticket::getTicketsByGuid( App::$curUser->guid,['top'=>$top,'filter'=>$filter]); // filter = finished
+        $ticketsArr = Ticket::getTicketsByGuid( App::$user->guid,['top'=>$top,'filter'=>$filter]); // filter = finished
         $this->setVars(compact('ticketsArr'));
         //$this->view = 'list';
         $this->layout = false;

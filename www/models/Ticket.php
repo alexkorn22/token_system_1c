@@ -9,7 +9,6 @@
 namespace models;
 use core\App;
 use core\base\Model;
-use config\Config;
 
 class Ticket extends Model
 {

@@ -17,19 +17,4 @@ class User extends Model {
         'password'=>'',
         'guid'=>''
     );
-
-    // TODO findOne() (DONE)
-
-    public static function getCurUser(){
-        if(isset($_SESSION['USER_ID'])){
-            $curUser = User::findOneById($_SESSION['USER_ID']);
-            // TODO check user (DONE)
-            if($curUser){
-                return $curUser;
-            }
-            return false;
-        }
-        return false;
-    }
-
 }

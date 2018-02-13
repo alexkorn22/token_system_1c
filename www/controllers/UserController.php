@@ -20,7 +20,6 @@ class UserController extends AppController
             if($user){
                 if(password_verify($_POST['password'], $user->password)){
                     $_SESSION['USER_ID'] = $user->id;
-                    App::$curUser  = $user ;
                     $this->redirect('/main');
                 }
             }
