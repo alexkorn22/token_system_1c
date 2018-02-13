@@ -56,7 +56,6 @@ abstract class Model
 
 
     public static function findAll($options = [], $limit = false){
-        self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
 
         if (count($options) > 0) {
@@ -95,7 +94,6 @@ abstract class Model
     }
 
     public static function findOneById($id){ // returns one object ! not array
-        self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
         $sql .= " WHERE id = " . $id . " LIMIT 1";
         $result = self::$db->pdo->query($sql);
@@ -110,7 +108,6 @@ abstract class Model
     }
 
     public static function findOne($keyValue){
-        self::setDB();
         $key   = array_shift(array_keys($keyValue));
         $value = array_shift(array_values($keyValue));
 

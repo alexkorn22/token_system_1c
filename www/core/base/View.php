@@ -22,34 +22,30 @@ class View
     public function render($vars){
         $layoutFile = DIR_VIEW."/".$this->layout.".php" ;
         $layoutFile = str_replace("\\","/",$layoutFile);
-       // $this->vars = $vars;
-        extract($vars);
-        //extract gives you vars in the back ground so you can use them
-        $view_name = $this->getPathView();
+
         if($this->layout !== false){
             if(file_exists($layoutFile)){ // check if layout not false
-                ob_start();
-                require_once ($view_name);
-                $content = ob_get_clean();
+                $content = $this->renderView($this->view,$vars);
                 require_once($layoutFile);
             }else{
                 echo "Failed to require the layout..";
             }
         }else{
-            require_once ($view_name);
+            echo $this->renderView($this->view,$vars);
         }
     }
 
     public function renderView($view,$vars){
-        // TODO привести к  одному вызову без дублирования (DONE)
-        $this->view = $view;
         extract($vars);
-        $view_name = $this->getPathView();
+        $this->view = $view;
+        $view_name  = $this->getPathView();
+        ob_start();
         require_once ($view_name);
+        return ob_get_clean() ;
     }
 
 
-    public function getPathView(){
+    protected function getPathView(){
         $view_name = DIR_VIEW."/".$this->route['prefix'].$this->route['controller']."/".$this->view.".php" ;
         $view_name = str_replace("\\","/",$view_name);
         return $view_name;

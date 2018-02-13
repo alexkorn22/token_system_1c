@@ -7,6 +7,7 @@
  */
 
 namespace models;
+use core\App;
 use core\base\Model;
 use config\Config;
 
@@ -24,29 +25,39 @@ class Ticket extends Model
 
     public static function getTicketsByGuid($guid,$options=[]){
         // create url :
-        $select   =  isset($options['select'])? $options['select'] :  '' ;
-        $top      =  isset($options['top'])? $options['top'] : '' ;
+        $baseUrl  = self::createUrl($guid,$options);
+        // send request :
+        $resp = self::sendReqToOData($baseUrl);
+        // get Objects :
+        return  self::getRecords($resp);
+
+    }
+
+    public static function createUrl($guid,$options){
         $baseUrl  =  TICKETS_URL.'?$format=json' ;
-        $baseUrl .= '&$select='.$select ;
-        $baseUrl .= '&$top='.$top ;
-        $baseUrl .= '&$filter=Клиент_Key%20eq%20guid'."'".$guid."'";
+        $select   =  isset($options['select'])? $options['select'] :  '' ;
+        $top      =  isset($options['top'])? $options['top'] : '10' ;
+        if(!empty($select)){
+            $baseUrl .= '&$select='.$select ;
+        }
+        if(!empty($top)){
+            $baseUrl .= '&$top='.$top ;
+        }
+        $baseUrl .= '&$filter=Клиент_Key%20eq%20guid';
+        $baseUrl .= "'".$guid."'";
         if(isset($options['filter']) && $options['filter']=='finished'){
             $filter   = 'false';
             $baseUrl .= '%20and%20Завершено%20eq%20'.$filter;
         }
 
-        $resp = self::requestToOneC($baseUrl);
-        return  self::getRecords($resp);
-
+        return $baseUrl;
     }
 
-    public static function requestToOneC($baseUrl){
-        // 1C login data :
-        $OneCLogin = require_once (CONFIG."/config.php");
-        // send request :
+
+    public static function sendReqToOData($baseUrl){
         $curl = curl_init();
         curl_setopt_array($curl, array(
-                CURLOPT_USERPWD => $OneCLogin['user'].":".$OneCLogin['pass'],
+                CURLOPT_USERPWD => App::$config->userOneC.":".App::$config->passOneC,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => $baseUrl
             )
@@ -67,6 +78,7 @@ class Ticket extends Model
                 $records[] = $object;
             }
         }
+
         return $records;
     }
 
@@ -75,11 +87,9 @@ class Ticket extends Model
     public static function deleteTicketByGuid($guid){
         $baseUrl = TICKETS_URL."(guid'{$guid}')";
         $ch = curl_init();
-        // 1C login data :
-        $OneCLogin = require_once (CONFIG."/config.php");
         // delete request :
         curl_setopt_array($ch, array(
-            CURLOPT_USERPWD => $OneCLogin['user'].":".$OneCLogin['pass'],
+            CURLOPT_USERPWD => App::$config->userOneC.":".App::$config->passOneC,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_HTTPHEADER =>array('Content-Type:application/atom+xml;type=entry','Accept:application/atom+xml'),
             CURLOPT_RETURNTRANSFER => 1,
@@ -90,6 +100,10 @@ class Ticket extends Model
         return $result;
     }
 
+
+    public function createTicket(){
+
+    }
 
     public function updateTicket(){
 

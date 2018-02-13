@@ -1,10 +1,8 @@
 <?php
 
-$oneCLoginData = array(
-    'user'=>'test',
-    'pass'=>'test'
+$params = array(
+    'userOneC'=>'test',
+    'passOneC'=>'test'
 );
 
-return $oneCLoginData;
-
-
+return $params;

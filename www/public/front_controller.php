@@ -1,6 +1,7 @@
 <?php
 
 
+use core\App;
 use core\Router;
 
 spl_autoload_register(function($classname){
@@ -28,7 +29,7 @@ define('IMAGE_DATA_PATH',"/images/data");
 define('DIR_IMAGES_DATA',ROOT."/public".IMAGE_DATA_PATH);
 define('TICKETS_URL','http://artorg.ddns.net:8899/ArtorgWork20/odata/standard.odata/Document_ОбращенияКлиентов');
 
-
+App::init();
 $url = $_SERVER['REQUEST_URI'];
 Router::dispatch($url);
 

@@ -3,14 +3,13 @@
 namespace controllers;
 
 
+use core\App;
 use core\base\Controller;
 use models\User;
 
 
 abstract class AppController extends Controller
 {
-    public $curUser;
-
     public function __construct($route){
         parent::__construct($route);
         $this->layout = LAYOUT_DEFAULT;
@@ -22,9 +21,7 @@ abstract class AppController extends Controller
             $this->redirect("/user/login");
             die();
         }
-        $this->curUser = $user;
-        $login = $this->curUser->login ;
-        $this->setVars(compact('login'));
+        App::$curUser  = $user;
     }
 
 }

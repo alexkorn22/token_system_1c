@@ -8,7 +8,7 @@
 
 namespace controllers;
 
-use Couchbase\UserSettings;
+use core\App;
 use models\User;
 
 class UserController extends AppController
@@ -20,7 +20,7 @@ class UserController extends AppController
             if($user){
                 if(password_verify($_POST['password'], $user->password)){
                     $_SESSION['USER_ID'] = $user->id;
-                    $this->curUser = $user ;
+                    App::$curUser  = $user ;
                     $this->redirect('/main');
                 }
             }

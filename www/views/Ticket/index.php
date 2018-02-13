@@ -8,16 +8,16 @@
 <div class="form-group">
     <label for="sel1">Number of tickets :</label>
     <select class="form-control" id="tickets_numb">
-        <option>10</option>
+        <option selected>10</option>
         <option>20</option>
         <option>50</option>
         <option>100</option>
-        <option value="400" selected>Select all</option>
+        <option value="400" >Select all</option>
     </select>
 </div>
 <hr>
 
 
 <div id="tickets">
-    <?php $this->renderView('list',compact('ticketsArr')); ?>
+    <?php echo $this->renderView('list',compact('ticketsArr')); ?>
 </div>

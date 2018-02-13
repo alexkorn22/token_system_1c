@@ -1,4 +1,5 @@
 <!DOCTIPE html>
+<?php  use core\App;?>
 <html lang="en">
 <head>
     <title><?=$title?></title>
@@ -25,9 +26,9 @@
             </li>
         </ul>
     <ul class="navbar-nav navbar-right">
-        <?php if(!empty( $_SESSION['USER_ID'])){ ?>
+        <?php if(App::$curUser->login){ ?>
             <li class="nav-item">
-                <a class="nav-link" href="#"> User : <?=$login?></a>
+                <a class="nav-link" href="#"> User : <?=App::$curUser->login?></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="\user\logout">Log Out</a>
