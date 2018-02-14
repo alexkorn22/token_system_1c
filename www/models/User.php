@@ -28,7 +28,7 @@ class User extends Model {
         return new User;
     }
 
-    public static function isGuest(){
+    public function isGuest(){
         if(isset(App::$user->id)){
             return false; // not guest ( user )
         }
