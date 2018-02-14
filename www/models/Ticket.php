@@ -52,7 +52,6 @@ class Ticket extends Model
         return $baseUrl;
     }
 
-    // TODO : one function to make requests to OData !
 
     public static function sendReqToOData($baseUrl){
         $curl = curl_init();
