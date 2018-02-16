@@ -9,19 +9,32 @@
 namespace controllers;
 
 
-use core\base\Controller;
+use core\App;
 use models\Ticket;
-use models\User;
 
-class TicketController extends Controller
+class TicketController extends AppController
 {
-    public function ticketListAction(){
 
-        $guid = User::findGuidByLogin($_SESSION['USER']);
-        $ticket = new Ticket;
-        $tickets = $ticket->getTicketsByGuid($guid);
-        $ticketsArr = json_decode($tickets,true);
+
+    public function indexAction(){
+        $ticketsArr = Ticket::getTicketsByGuid(App::$user->guid);
         $this->setVars(compact('ticketsArr'));
-
     }
+
+    public function ListAction(){
+        $top    = isset($_GET['top']) ? $_GET['top'] : '';
+        $filter = isset($_GET['filter'])? $_GET['filter'] : '';
+        $ticketsArr = Ticket::getTicketsByGuid( App::$user->guid,['top'=>$top,'filter'=>$filter]); // filter = finished
+        $this->setVars(compact('ticketsArr'));
+        //$this->view = 'list';
+        $this->layout = false;
+    }
+
+    public function deleteAction(){
+        if(isset($_GET['guid'])){
+            Ticket::deleteTicketByGuid($_GET['guid']);
+        }
+        $this->redirect('/ticket');
+    }
+
 }

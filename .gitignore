@@ -1,3 +1,4 @@
 .idea
 www/public/images/data/*
-www/config/
+www/config/config.php
+www/config/db.php

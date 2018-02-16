@@ -7,21 +7,12 @@
  */
 
 namespace controllers;
-use models\User;
 
 class MainController extends AppController
 {
 
     public function indexAction(){
-        $user = new UserController($this->route);
-        $user->getView();
+        $title = 'WeDo Support';
+        $this->setVars(compact('title'));
     }
-
-    public function hashPassAction(){
-        $password = '123456';
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        debug($hashed_password,true);
-    }
-
-
 }

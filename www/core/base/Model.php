@@ -56,8 +56,6 @@ abstract class Model
 
 
     public static function findAll($options = [], $limit = false){
-        self::setDB();
-        //debug( static::$tableName,true);
         $sql = "SELECT * FROM " . static::$tableName;
 
         if (count($options) > 0) {
@@ -80,6 +78,7 @@ abstract class Model
         $result = $stmt->execute(array_values($options));
 
         $records = array();
+
         if ($result) {
             while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
                 $object = new static();
@@ -95,21 +94,34 @@ abstract class Model
     }
 
     public static function findOneById($id){ // returns one object ! not array
-        self::setDB();
         $sql = "SELECT * FROM " . static::$tableName;
         $sql .= " WHERE id = " . $id . " LIMIT 1";
         $result = self::$db->pdo->query($sql);
         if ($result->rowCount() > 0) {
             while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
                 $object = new static();
-                if (isset($row['id'])) {
-                    $object->id = (int)$row['id'];
-                }
+                $object->id = (int)$row['id'];
                 $object->load($row);
-                $record_object = $object;
+                return $object;
             }
         }
-        return $record_object;
+    }
+
+    public static function findOne($keyValue){
+        $key   = array_shift(array_keys($keyValue));
+        $value = array_shift(array_values($keyValue));
+
+        $sql = "SELECT * FROM " . static::$tableName;
+        $sql .= " WHERE ".$key."= '" . $value . "' LIMIT 1";
+        $result = self::$db->pdo->query($sql);
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+                $object = new static();
+                $object->id = (int)$row['id'];
+                $object->load($row);
+                return $object;
+            }
+        }
     }
 
 
@@ -186,26 +198,5 @@ abstract class Model
         $stmt = self::$db->pdo->prepare($sql);
         $stmt->execute([$id]);
     }
-
-
-    public static function findGuidByLogin($login){
-        self::setDB();
-        $sql = "SELECT * FROM " . static::$tableName;
-        $sql .= " WHERE login= '" . $login . "' LIMIT 1";
-        $result = self::$db->pdo->query($sql);
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
-                $object = new static();
-                if (isset($row['id'])) {
-                    $object->id = (int)$row['id'];
-                }
-                $object->load($row);
-                $record_object = $object;
-            }
-        }
-
-        return $record_object->guid;
-    }
-
 
 }
