@@ -22,7 +22,7 @@ class View
     public function render($vars){
         $layoutFile = DIR_VIEW."/".$this->layout.".php" ;
         $layoutFile = str_replace("\\","/",$layoutFile);
-
+        extract($vars);
         if($this->layout !== false){
             if(file_exists($layoutFile)){ // check if layout not false
                 $content = $this->renderView($this->view,$vars);

@@ -14,7 +14,6 @@
     <!--General layout for everything-->
 </head>
 <body class="container-fullwidth">
-
 <nav class="navbar  navbar-toggleable navbar-light" style="background-color: lightskyblue;">
     <a class="navbar-brand" href="/">WeDo Support</a>
         <ul class="navbar-nav mr-auto">

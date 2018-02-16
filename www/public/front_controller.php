@@ -20,7 +20,6 @@ session_start();
 require_once ('../core/functions.php');
 
 define('ROOT',$_SERVER["DOCUMENT_ROOT"]);
-define('CONFIG',ROOT."/config");
 define('PUBLIC_PATH',$_SERVER["DOCUMENT_ROOT"]."/public");
 define('DIR_VIEW',ROOT."/views");
 define('LAYOUT_DEFAULT','layout');
